@@ -1,24 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
 
 function App() {
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/test") // 백엔드 API 호출
+        .then((response) => response.text())
+        .then((data) => setMessage(data))
+        .catch((error) => console.error("Error:", error));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div>
+        <h1>Spring Boot + React 연결</h1>
+        <p>백엔드 응답: {message}</p>
+      </div>
   );
 }
 
