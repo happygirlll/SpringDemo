@@ -1,0 +1,1 @@
+package DemoTest.payment.service;import org.springframework.amqp.rabbit.annotation.RabbitListener;import org.springframework.stereotype.Service;@Servicepublic class ShoppingService {	@RabbitListener(queues = "paymentQueue")	public void processShipping(Long orderId) {		System.out.println("배송 준비 완료: 주문 ID = " + orderId);	}}
