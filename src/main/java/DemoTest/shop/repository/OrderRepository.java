@@ -1,0 +1,1 @@
+package DemoTest.shop.repository;import DemoTest.shop.model.Order;import org.springframework.data.jpa.repository.JpaRepository;public interface OrderRepository extends JpaRepository<Order, Long> {}
