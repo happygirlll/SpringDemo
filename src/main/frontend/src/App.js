@@ -1,21 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import axios from "axios";
 
 function App() {
-  const [message, setMessage] = useState("");
+    const [productName, setProductName] = useState("");
+    const [quantity, setQuantity] = useState(1);
 
-  useEffect(() => {
-    fetch("http://localhost:8080/api/test") // 백엔드 API 호출
-        .then((response) => response.text())
-        .then((data) => setMessage(data))
-        .catch((error) => console.error("Error:", error));
-  }, []);
+    const createOrder = () => {
+        axios.post("http://localhost:8080/api/orders", { productName, quantity })
+            .then(response => {
+                alert("주문 완료: " + response.data.id);
+            })
+            .catch(error => {
+                console.error("주문 실패", error);
+            });
+    };
 
-  return (
-      <div>
-        <h1>Spring Boot + React 연결</h1>
-        <p>백엔드 응답: {message}</p>
-      </div>
-  );
+    return (
+        <div style={{ textAlign: "center", padding: "20px" }}>
+            <h1>🛒 간단한 쇼핑몰</h1>
+            <input
+                type="text"
+                placeholder="상품명"
+                value={productName}
+                onChange={(e) => setProductName(e.target.value)}
+            />
+            <input
+                type="number"
+                value={quantity}
+                onChange={(e) => setQuantity(Number(e.target.value))}
+            />
+            <button onClick={createOrder}>주문하기</button>
+        </div>
+    );
 }
 
 export default App;
